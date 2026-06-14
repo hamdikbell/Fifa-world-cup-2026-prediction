@@ -541,9 +541,9 @@ with tab2:
     col_sel, col_info = st.columns([2, 3])
     with col_sel:
         group_sel = st.selectbox(
-            "Groupe",
+            "Group",
             list(groups_official.keys()),
-            format_func=lambda x: f"Groupe {x} — {' · '.join(groups_official[x])}"
+            format_func=lambda x: f"Group {x} — {' · '.join(groups_official[x])}"
         )
     with col_info:
         teams_sel = groups_official[group_sel]
@@ -551,7 +551,7 @@ with tab2:
         leader = ranked_sel[0]
         st.markdown(f"""
         <div style="padding:.6rem 0;font-size:13px;color:#555">
-          Leader actuel&nbsp; <strong style="color:#1D9E75">{leader}</strong>
+          Current leader&nbsp; <strong style="color:#1D9E75">{leader}</strong>
           &nbsp;·&nbsp; {stats_sel[leader]['pts']} pts
           &nbsp;·&nbsp; GD {gd_display(stats_sel[leader]['gd'])}
         </div>
@@ -564,7 +564,7 @@ with tab2:
         h, a   = row['home_team'], row['away_team']
         hg, ag = row['pred_home_r'], row['pred_away_r']
         src    = row['source']
-        tag_html = '<span class="match-tag-real">Score réel</span>' if src == 'réel' else '<span class="match-tag-pred">Prédit</span>'
+        tag_html = '<span class="match-tag-real">Real score</span>' if src == 'réel' else '<span class="match-tag-pred">Predicted</span>'
         winner = result_label(hg, ag, h, a)
         st.markdown(f"""
         <div class="match-card">
@@ -579,49 +579,49 @@ with tab2:
         """, unsafe_allow_html=True)
 
 
-# ─── TAB 3 : Qualifiés ─────────────────────────────────────
+# ─── TAB 3 : Qualified Teams ─────────────────────────────────────
 with tab3:
     qualified = []
     third_place = []
     for gname, teams in groups_official.items():
         ranked, stats = calculate_standings(teams, all_wc)
-        qualified.append({'Groupe': gname, 'Place': '1er', 'Équipe': ranked[0],
+        qualified.append({'Group': gname, 'Place': '1st', 'Team': ranked[0],
                           'Pts': stats[ranked[0]]['pts'], 'GD': stats[ranked[0]]['gd']})
-        qualified.append({'Groupe': gname, 'Place': '2e',  'Équipe': ranked[1],
+        qualified.append({'Group': gname, 'Place': '2nd',  'Team': ranked[1],
                           'Pts': stats[ranked[1]]['pts'], 'GD': stats[ranked[1]]['gd']})
-        third_place.append({'Groupe': gname, 'Équipe': ranked[2],
+        third_place.append({'Group': gname, 'Team': ranked[2],
                             'Pts': stats[ranked[2]]['pts'], 'GD': stats[ranked[2]]['gd']})
 
-    st.markdown('<div class="section-title">1ers et 2es — qualifiés directement (24 équipes)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">1sts and 2nds — directly qualified (24 teams)</div>', unsafe_allow_html=True)
 
     rows_q = ""
     for q in qualified:
-        badge = f'<span class="qual-group-badge">{q["Groupe"]}</span>'
+        badge = f'<span class="qual-group-badge">{q["Group"]}</span>'
         rows_q += f"""<tr>
           <td>{badge}</td>
           <td style="color:#888;font-size:12px">{q['Place']}</td>
-          <td class="td-team">{q['Équipe']}</td>
+          <td class="td-team">{q['Team']}</td>
           <td style="text-align:center">{q['Pts']}</td>
           <td style="text-align:center">{gd_display(q['GD'])}</td>
         </tr>"""
 
     st.markdown(f"""
     <table class="qual-table">
-      <thead><tr><th>Gr.</th><th>Place</th><th>Équipe</th><th style="text-align:center">Pts</th><th style="text-align:center">GD</th></tr></thead>
+      <thead><tr><th>Gr.</th><th>Place</th><th>Team</th><th style="text-align:center">Pts</th><th style="text-align:center">GD</th></tr></thead>
       <tbody>{rows_q}</tbody>
     </table>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div class="section-title" style="margin-top:2rem">Meilleurs 3es — 8 qualifiés sur 12</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title" style="margin-top:2rem">Best 3rd place teams — 8 qualified out of 12</div>', unsafe_allow_html=True)
 
     third_sorted = sorted(third_place, key=lambda x:(x['Pts'],x['GD']), reverse=True)
     rows_t = ""
     for i, t in enumerate(third_sorted):
-        badge  = f'<span class="qual-group-badge">{t["Groupe"]}</span>'
-        status = '<span class="qual-in">Qualifié ✓</span>' if i < 8 else '<span class="qual-out">Éliminé</span>'
+        badge  = f'<span class="qual-group-badge">{t["Group"]}</span>'
+        status = '<span class="qual-in">Qualified ✓</span>' if i < 8 else '<span class="qual-out">Eliminated</span>'
         rows_t += f"""<tr>
           <td>{badge}</td>
-          <td class="td-team">{t['Équipe']}</td>
+          <td class="td-team">{t['Team']}</td>
           <td style="text-align:center">{t['Pts']}</td>
           <td style="text-align:center">{gd_display(t['GD'])}</td>
           <td>{status}</td>
@@ -629,7 +629,7 @@ with tab3:
 
     st.markdown(f"""
     <table class="qual-table">
-      <thead><tr><th>Gr.</th><th>Équipe</th><th style="text-align:center">Pts</th><th style="text-align:center">GD</th><th>Statut</th></tr></thead>
+      <thead><tr><th>Gr.</th><th>Team</th><th style="text-align:center">Pts</th><th style="text-align:center">GD</th><th>Status</th></tr></thead>
       <tbody>{rows_t}</tbody>
     </table>
     """, unsafe_allow_html=True)
