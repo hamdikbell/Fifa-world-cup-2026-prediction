@@ -463,19 +463,18 @@ st.markdown(f"""
 <div class="hero">
   <div class="hero-left">
     <h1 class="hero-title">FIFA World Cup <span class="accent">2026</span></h1>
-    <div class="hero-sub">Prédictions de la phase de groupes — données depuis 2010</div>
   </div>
   <div class="hero-stats">
     <div>
-      <div class="hero-stat-label">Équipes</div>
+      <div class="hero-stat-label">Teams</div>
       <div class="hero-stat-val">{n_teams}</div>
     </div>
     <div>
-      <div class="hero-stat-label">Scores réels</div>
+      <div class="hero-stat-label">Real Scores</div>
       <div class="hero-stat-val" style="color:#1D9E75">{n_real}</div>
     </div>
     <div>
-      <div class="hero-stat-label">Prédictions</div>
+      <div class="hero-stat-label">Predictions</div>
       <div class="hero-stat-val">{n_pred}</div>
     </div>
     <div>
