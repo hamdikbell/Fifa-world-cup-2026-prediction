@@ -489,8 +489,7 @@ st.markdown(f"""
 # ============================================================
 # TABS
 # ============================================================
-tab1, tab2, tab3 = st.tabs(["Classements par groupe", "Scores & résultats", "Équipes qualifiées"])
-
+tab1, tab2, tab3 = st.tabs(["Group standings", "Scores & results", "Qualified teams"])
 
 # ─── TAB 1 : Classements ───────────────────────────────────
 with tab1:
