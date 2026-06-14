@@ -114,6 +114,7 @@ pip install -r requirements.txt
 ### Run the application
 
 ```bash
+cd FIFA2026
 streamlit run app.py
 ```
 

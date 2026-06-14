@@ -270,7 +270,18 @@ st.markdown("""
 # ============================================================
 @st.cache_data
 def load_and_train():
-    df = pd.read_csv('results.csv')
+    from pathlib import Path
+    from sklearn.ensemble import GradientBoostingRegressor
+
+    BASE_DIR = Path(__file__).resolve().parent
+    DATA_PATH = BASE_DIR / "results.csv"
+
+    # 🔥 SAFE CHECK
+    if not DATA_PATH.exists():
+        st.error(f"❌ results.csv introuvable ici : {DATA_PATH}")
+        st.stop()
+
+    df = pd.read_csv(DATA_PATH)
     df['date'] = pd.to_datetime(df['date'])
 
     today = pd.Timestamp('2026-06-14')
